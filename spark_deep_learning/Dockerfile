@@ -7,10 +7,10 @@ WORKDIR /
 
 # Install pip
 RUN apt-get update 
-# RUN apt-get install -y python3-pip 
-# RUN pip3 install --upgrade pip 
-RUN apt-get install -y python-pip 
-RUN pip install --upgrade pip 
+RUN apt-get install -y python3-pip 
+RUN pip3 install --upgrade pip 
+# RUN apt-get install -y python-pip 
+# RUN pip install --upgrade pip 
 RUN apt-get install -y python-setuptools python-dev
 
 # Install libgtk2.0 neccesary for openfv (Python library)
@@ -24,11 +24,11 @@ RUN mkdir /working_directory
 RUN mkdir /environments
 
 RUN apt-get install virtualenv python-virtualenv -y
-RUN cd /environments && virtualenv general_env --python=/usr/bin/python2
+RUN cd /environments && virtualenv general_env --python=/usr/bin/python3
 
 # Add and install requirements
 ADD requirements.txt /requirements.txt
-RUN [ "/bin/bash", "-c", "source /environments/general_env/bin/activate && pip install -r requirements.txt"]
+RUN [ "/bin/bash", "-c", "source /environments/general_env/bin/activate && pip3 install -r requirements.txt"]
 
 # Install & configure Java
 RUN apt-get install software-properties-common -y
@@ -43,13 +43,15 @@ ENV PATH "${PATH}:${JAVA_HOME}"
 ENV PATH "${PATH}:${JRE_HOME}"
 
 # Install & configure Scala
-ENV SCALA_VERSION 2.12.4
+# ENV SCALA_VERSION 2.12.4
+ENV SCALA_VERSION 2.11.8
 RUN curl -fsL https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.tgz | tar xfz - -C /software/
 ENV SCALA_HOME /software/scala-$SCALA_VERSION
 ENV PATH "${PATH}:${SCALA_HOME}/bin"
 
 # Install & configure Spark
-ENV SPARK_VERSION 2.1.0
+# ENV SPARK_VERSION 2.1.0
+ENV SPARK_VERSION 2.0.2
 RUN curl -fsL https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz | tar xfz - -C /software/
 ENV SPARK_HOME /software/spark-$SPARK_VERSION-bin-hadoop2.7
 ENV PATH "${PATH}:${SPARK_HOME}/bin"
