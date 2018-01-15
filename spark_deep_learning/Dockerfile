@@ -19,6 +19,11 @@ RUN apt-get install libgtk2.0-dev -y
 # Install thinker
 RUN apt-get install -y python3-tk
 
+# Install tesseract & imagemagick
+RUN apt-get install -y tesseract-ocr
+RUN apt-get install -y tesseract-ocr-spa
+RUN apt-get install -y imagemagick
+
 RUN mkdir /software
 RUN mkdir /working_directory
 RUN mkdir /environments
