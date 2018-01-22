@@ -36,7 +36,7 @@ ADD requirements.txt /requirements.txt
 RUN [ "/bin/bash", "-c", "source /environments/general_env/bin/activate && pip3 install -r requirements.txt"]
 
 # Install & configure Java
-RUN apt-get install software-properties-common -y
+RUN apt-get update && apt-get install software-properties-common -y
 RUN add-apt-repository ppa:webupd8team/java
 RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
@@ -50,11 +50,13 @@ ENV PATH "${PATH}:${JRE_HOME}"
 # Install & configure Scala
 # ENV SCALA_VERSION 2.12.4
 ENV SCALA_VERSION 2.11.8
+# ENV SCALA_VERSION 2.11.11
 RUN curl -fsL https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.tgz | tar xfz - -C /software/
 ENV SCALA_HOME /software/scala-$SCALA_VERSION
 ENV PATH "${PATH}:${SCALA_HOME}/bin"
 
 # Install & configure Spark
+# ENV SPARK_VERSION 2.2.0
 # ENV SPARK_VERSION 2.1.0
 ENV SPARK_VERSION 2.0.2
 RUN curl -fsL https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz | tar xfz - -C /software/
@@ -74,4 +76,7 @@ EXPOSE 8080
 # CMD ["/working_directory/start_notebook.sh"]
 
 # CMD ["/bin/bash", "-c", "source /environments/general_env/bin/activate && python hello.py"]
+
+ENV SHELL /bin/bash
+
 CMD ["/bin/bash", "-c", "/working_directory/start_notebook.sh"]

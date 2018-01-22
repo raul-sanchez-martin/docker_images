@@ -17,3 +17,4 @@ jupyter
 wordcloud
 BigDL==0.3.0
 pytesseract
+pytest
