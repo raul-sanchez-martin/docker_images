@@ -57,8 +57,8 @@ ENV PATH "${PATH}:${SCALA_HOME}/bin"
 
 # Install & configure Spark
 # ENV SPARK_VERSION 2.2.0
-# ENV SPARK_VERSION 2.1.0
-ENV SPARK_VERSION 2.0.2
+ENV SPARK_VERSION 2.1.0
+# ENV SPARK_VERSION 2.0.2
 RUN curl -fsL https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz | tar xfz - -C /software/
 ENV SPARK_HOME /software/spark-$SPARK_VERSION-bin-hadoop2.7
 ENV PATH "${PATH}:${SPARK_HOME}/bin"

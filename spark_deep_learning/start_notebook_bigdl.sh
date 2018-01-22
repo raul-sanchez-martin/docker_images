@@ -14,8 +14,13 @@ export PYSPARK_DRIVER_PYTHON_OPTS="notebook --notebook-dir=./  --ip=0.0.0.0 --po
    
 ${SPARK_HOME}/bin/pyspark \
    --master ${MASTER} \
+   --properties-file ${BigDL_HOME}/share/conf/spark-bigdl.conf \
    --driver-cores 5  \
    --driver-memory 10g  \
    --total-executor-cores 8  \
    --executor-cores 1  \
    --executor-memory 20g \
+   --py-files ${PYTHON_API_ZIP_PATH} \
+   --jars ${BigDL_JAR_PATH} \
+   --conf spark.driver.extraClassPath=${BigDL_JAR_PATH} \
+   --conf spark.executor.extraClassPath=bigdl-${BIGDL_VERSION}-jar-with-dependencies.jar
