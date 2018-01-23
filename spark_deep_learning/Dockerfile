@@ -50,32 +50,23 @@ ENV PATH "${PATH}:${JRE_HOME}"
 # Install & configure Scala
 # ENV SCALA_VERSION 2.12.4
 ENV SCALA_VERSION 2.11.8
-# ENV SCALA_VERSION 2.11.11
 RUN curl -fsL https://downloads.lightbend.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.tgz | tar xfz - -C /software/
 ENV SCALA_HOME /software/scala-$SCALA_VERSION
 ENV PATH "${PATH}:${SCALA_HOME}/bin"
 
 # Install & configure Spark
-# ENV SPARK_VERSION 2.2.0
-ENV SPARK_VERSION 2.1.0
-# ENV SPARK_VERSION 2.0.2
+# ENV SPARK_VERSION 2.1.0
+ENV SPARK_VERSION 2.0.2
 RUN curl -fsL https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz | tar xfz - -C /software/
 ENV SPARK_HOME /software/spark-$SPARK_VERSION-bin-hadoop2.7
 ENV PATH "${PATH}:${SPARK_HOME}/bin"
 
 ADD start_notebook.sh /working_directory/start_notebook.sh
-ADD hello.py /working_directory/hello.py
 
 WORKDIR /working_directory
 RUN chmod +x /working_directory/start_notebook.sh
 
 EXPOSE 8080
-# RUN fuser -k 8080/tcp
-# RUN /working_directory/start_notebook.sh
-
-# CMD ["/working_directory/start_notebook.sh"]
-
-# CMD ["/bin/bash", "-c", "source /environments/general_env/bin/activate && python hello.py"]
 
 ENV SHELL /bin/bash
 
